@@ -12,7 +12,7 @@
 
 1. `docker-compose exec php bash`
 2. `composer install`
-3. `cp.env.example .env`
+3. `cp .env.example .env`
 4. .envに以下の環境変数を追加
 
 ```text
