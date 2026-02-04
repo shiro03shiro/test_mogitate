@@ -9,12 +9,33 @@ class ProductsTableSeeder extends Seeder
 {
     public function run()
     {
-        $seasons = [
-            '春' => DB::table('seasons')->updateOrInsert(['name' => '春'], ['name' => '春'])->id,
-            '夏' => DB::table('seasons')->updateOrInsert(['name' => '夏'], ['name' => '夏'])->id,
-            '秋' => DB::table('seasons')->updateOrInsert(['name' => '秋'], ['name' => '秋'])->id,
-            '冬' => DB::table('seasons')->updateOrInsert(['name' => '冬'], ['name' => '冬'])->id,
-        ];
+        $seasons = [];
+        $seasonNames = ['春', '夏', '秋', '冬'];
+
+        foreach ($seasonNames as $name) {
+            $result = DB::table('seasons')->updateOrInsert(
+                ['name' => $name],
+                ['name' => $name]
+            );
+            $seasons[$name] = DB::table('seasons')
+                ->where('name', $name)
+                ->value('id');
+        }
+
+        $productImages = [
+            'キウイ' => 'kiwi.jpg',
+            'ストロベリー' => 'strawberry.jpg',
+            'オレンジ' => 'orange.jpg',
+            'スイカ' => 'watermelon.jpg',
+            'ピーチ' => 'peach.jpg',
+            'シャインマスカット' => 'muscat.jpg',
+            'パイナップル' => 'pineapple.jpg',
+            'ブドウ' => 'grapes.jpg',
+            'バナナ' => 'banana.jpg',
+            'メロン' => 'melon.jpg'
+    ];
+
+
 
         $products = [
             [
@@ -84,6 +105,7 @@ class ProductsTableSeeder extends Seeder
                 'name' => $productData['name'],
                 'price' => $productData['price'],
                 'description' => $productData['description'],
+                'image' => $productImages[$productData['name']] ?? 'default_fruit.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
