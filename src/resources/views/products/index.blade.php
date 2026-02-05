@@ -7,12 +7,18 @@
 @section('content')
 <div class="body">
     <div class="main-container">
-        {{-- 左側：検索エリア --}}
-        <div class="main-left">
+        {{-- 1. タイトル行 --}}
+        <div class="header-row">
             <div class="section__title">
                 <h2>商品一覧</h2>
             </div>
+            <div class="add-button-container">
+                <a href="{{ route('products.register') }}" class="add-product-btn">＋商品を追加</a>
+            </div>
+        </div>
 
+        {{-- 2. 検索セクション --}}
+        <div class="search-section">
             <form class="search-form" method="GET" action="{{ route('products.index') }}">
                 @csrf
                 <div class="search-form__item">
@@ -34,17 +40,11 @@
                     </select>
                 </div>
             </form>
-
             <hr class="divider">
         </div>
-        {{-- 右側 --}}
-        <div class="main-right">
-            {{-- 追加ボタン --}}
-            <div class="add-button-container">
-                <a href="{{ route('products.register') }}" class="add-product-btn">＋商品を追加</a>
-            </div>
 
-            {{-- 商品グリッド --}}
+        {{-- 3. 商品グリッド＋ページネーション --}}
+        <div class="content-section">
             <div class="product-grid">
                 @forelse($products as $product)
                     <div class="product-card">
@@ -66,21 +66,19 @@
                     <p class="no-products">商品がありません</p>
                 @endforelse
             </div>
-
-            {{-- ページネーション（配列の場合は手動実装） --}}
             <div class="pagination">
                 @if(isset($currentPage) && isset($lastPage))
                     @if($currentPage > 1)
                         <a href="?page={{ $currentPage - 1 }}" class="pagination-link">＜</a>
                     @endif
-                    
+
                     @for($i = 1; $i <= $lastPage; $i++)
-                        <a href="?page={{ $i }}" 
+                        <a href="?page={{ $i }}"
                         class="pagination-link {{ $currentPage == $i ? 'active' : '' }}">
                             {{ $i }}
                         </a>
                     @endfor
-                    
+
                     @if($currentPage < $lastPage)
                         <a href="?page={{ $currentPage + 1 }}" class="pagination-link">＞</a>
                     @endif

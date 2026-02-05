@@ -1,32 +1,41 @@
 /* メインコンテナ */
 .main-container {
     max-width: 1230px;
-    margin: 0;
-    display: flex;
-    gap: 30px;
-    position: relative;
+    margin: 0 auto;
     padding: 0 20px;
-    box-sizing: border-box;
 }
 
-/* 左側エリア */
-.main-left {
-    flex: 0 0 300px;
+/* 1. タイトル行 */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding: 20px 0;
 }
 
 .section__title h2 {
     font-size: 28px;
     color: #333;
-    margin: 0 0 25px 0;
+    margin: 0;
     font-weight: bold;
 }
 
-/* 検索フォーム */
+/* 2. 検索セクション */
+.search-section {
+    margin-bottom: 30px;
+    padding-left: 1px;
+    max-width: 400px;
+    width: 100%;
+}
+
 .search-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .search-form__item {
@@ -86,18 +95,24 @@
     margin: 30px 0;
 }
 
-/* 右側エリア */
-.main-right {
-    flex: 1;
+/* 3. コンテンツセクション */
+.content-section {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    flex: 1;
 }
+
+/* 商品グリッド */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
 /* 追加ボタン */
 .add-button-container {
-    position: absolute;
-    top: 30px;
-    right: 30px;
+    margin-left: auto;
 }
 
 .add-product-btn {
@@ -119,15 +134,6 @@
     background: #e6b800;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(245, 200, 0, 0.4);
-}
-
-/* 商品グリッド */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-    flex: 1;
-    width: 100%;
 }
 
 /* 商品カード */
@@ -211,24 +217,24 @@
 
 /* レスポンシブ */
 @media (max-width: 768px) {
-    .main-container {
+    .header-row {
         flex-direction: column;
         gap: 20px;
-    }
-
-    .main-left {
-        flex: none;
-        padding: 20px;
+        align-items: stretch;
     }
 
     .add-button-container {
-        position: static;
         order: -1;
+        margin-left: 0;
     }
 
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
+    }
+
+    .search-section {
+        padding-left: 0;
     }
 }
 
