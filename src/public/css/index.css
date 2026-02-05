@@ -1,19 +1,16 @@
 /* メインコンテナ */
 .main-container {
     max-width: 1230px;
-    margin: 0 auto;
+    margin: 0;
     display: flex;
     gap: 30px;
-    position: relative;
+    align-items: stretch;
 }
 
 /* 左側エリア */
 .main-left {
     flex: 0 0 300px;
-    background: #fff;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .section__title h2 {
@@ -87,14 +84,22 @@
     margin: 30px 0;
 }
 
-/* 追加ボタン */
-.add-button-container {
-    position: absolute;
-    top: 30px;
-    right: 30px;
+/* 右側エリア */
+.main-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-.add-product-btn {
+/* 追加ボタン */
+.add-product {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.add-product__btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -109,7 +114,7 @@
     transition: all 0.3s;
 }
 
-.add-product-btn:hover {
+.add-product__btn:hover {
     background: #e6b800;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(245, 200, 0, 0.4);
@@ -120,7 +125,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
-    flex: 1;
 }
 
 /* 商品カード */
