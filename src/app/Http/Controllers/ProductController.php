@@ -1,22 +1,38 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = [
-            ['id' => 1, 'name' => 'りんご', 'price' => 150, 'description' => '新鮮なりんご'],
-            ['id' => 2, 'name' => 'みかん', 'price' => 100, 'description' => '甘いみかん'],
-        ];
+        $query = Product::query();
+
+        if ($search = $request->get('search')) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        $sort = $request->get('sort');
+        if ($sort === 'price_asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sort === 'price_desc') {
+            $query->orderBy('price', 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $products = $query->paginate(10);
+
         return view('products.index', compact('products'));
     }
 
-    public function detail($productId)
+    public function detail($id)
     {
-        $product = ['id' => $productId, 'name' => 'りんご', 'price' => 150, 'description' => '詳細：新鮮なりんごです。'];
+        $product = Product::findOrFail($id);
         return view('products.detail', compact('product'));
     }
 
@@ -27,14 +43,26 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // 仮実装（後でDB化）
-        $name = $request->input('name');
-        $price = $request->input('price');
-        
-        // ダンプして確認
-        dd('登録成功！', ['name' => $name, 'price' => $price]);
-        
-        return redirect()->route('products.index');
-    }
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|integer|min:0',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
+        $imagePath = 'default.jpg';
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+
+        Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'image' => $imagePath,
+        ]);
+
+        return redirect()->route('products.index')
+            ->with('success', '商品を登録しました！');
+    }
 }
