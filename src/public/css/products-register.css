@@ -26,7 +26,6 @@
 }
 
 input[type="text"],
-input[type="number"],
 input[type="file"],
 textarea {
     width: 100%;
@@ -36,16 +35,6 @@ textarea {
     font-size: 16px;
     transition: all 0.3s ease;
     background: #fafbfc;
-}
-
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
 }
 
 input:focus,
