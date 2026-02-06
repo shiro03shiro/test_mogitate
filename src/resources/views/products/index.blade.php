@@ -61,22 +61,28 @@
                     <p class="no-products">商品がありません</p>
                 @endforelse
             </div>
-            {{-- ページネーション（配列の場合は手動実装） --}}
+            {{-- ページネーション（手動実装・確実動作） --}}
             <div class="pagination">
-                @if(isset($currentPage) && isset($lastPage))
-                    @if($currentPage > 1)
-                        <a href="?page={{ $currentPage - 1 }}" class="pagination-link">＜</a>
+                @if($products->hasPages())
+                    {{-- 前のページ --}}
+                    @if($products->onFirstPage())
+                        <span class="pagination-link disabled">＜</span>
+                    @else
+                        <a href="{{ $products->previousPageUrl() }}" class="pagination-link">＜</a>
                     @endif
-
-                    @for($i = 1; $i <= $lastPage; $i++)
-                        <a href="?page={{ $i }}"
-                        class="pagination-link {{ $currentPage == $i ? 'active' : '' }}">
-                            {{ $i }}
-                        </a>
-                    @endfor
-
-                    @if($currentPage < $lastPage)
-                        <a href="?page={{ $currentPage + 1 }}" class="pagination-link">＞</a>
+                    {{-- ページ番号 --}}
+                    @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                        @if($page == $products->currentPage())
+                            <span class="pagination-link active">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="pagination-link">{{ $page }}</a>
+                        @endif
+                    @endforeach
+                    {{-- 次のページ --}}
+                    @if($products->hasMorePages())
+                        <a href="{{ $products->nextPageUrl() }}" class="pagination-link">＞</a>
+                    @else
+                        <span class="pagination-link disabled">＞</span>
                     @endif
                 @endif
             </div>

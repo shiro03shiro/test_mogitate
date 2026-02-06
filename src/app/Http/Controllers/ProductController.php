@@ -1,16 +1,34 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Season;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $query = Product::query();
+        
+        // 検索
+        if ($search = $request->get('search')) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+        
+        // ソート
+        if ($sort = $request->get('sort')) {
+            if ($sort === 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($sort === 'price_desc') {
+                $query->orderBy('price', 'desc');
+            }
+        }
+        
+        $products = $query->paginate(6);
         return view('products.index', compact('products'));
     }
 
