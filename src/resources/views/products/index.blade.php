@@ -28,44 +28,34 @@
                     <h3>価格順で表示</h3>
                     <select class="search-form__item-select" name="sort">
                         <option value="">価格で並べ替え</option>
-                        <option value="price_asc" {{ request('sort') == 'public' ? 'selected' : '' }}>価格が安い順</option>
+                        <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>価格が安い順</option>
                         <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>価格が高い順</option>
                     </select>
                 </div>
             </form>
             <hr class="divider">
         </div>
-
         {{-- 右側：コンテンツエリア --}}
         <div class="main-right">
-            {{-- 成功メッセージ --}}
-            @if(session('success'))
-                <div class="alert-success">{{ session('success') }}</div>
-            @endif
-
             {{-- 右上：追加ボタン --}}
             <div class="add-product">
                 <a href="{{ route('products.register') }}" class="add-product__btn">＋商品を追加</a>
             </div>
-
             {{-- 商品グリッド --}}
             <div class="product-grid">
                 @forelse($products as $product)
                     <div class="product-card">
-                        <a href="{{ route('products.detail', $product->id) }}" class="product-card__link">
-                            @php
-                                $imageSrc = $product->image && file_exists(storage_path('app/public/' . $product->image))
-                                    ? asset('storage/' . $product->image)
-                                    : asset('image/' . strtolower($product->name) . '.jpg');
-                            @endphp
-                            <img src="{{ asset('image/' . $product->image) }}"
-                                alt="{{ $product->name }}"
-                                class="product-card__image"
-                                loading="lazy"
-                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <a href="{{ route('products.detail', $product['id']) }}" class="product-card__link">
+                            @if(isset($product['image_path']) && $product['image_path'])
+                                <img src="{{ asset('storage/' . $product['image_path']) }}"
+                                    alt="{{ $product['name'] }}"
+                                    class="product-card__image">
+                            @else
+                                <div class="product-card__no-image">画像なし</div>
+                            @endif
                             <div class="product-card__content">
-                                <h3 class="product-card__name">{{ $product->name }}</h3>
-                                <p class="product-card__price">¥{{ number_format($product->price) }}</p>
+                                <h3 class="product-card__name">{{ $product['name'] }}</h3>
+                                <p class="product-card__price">¥{{ number_format($product['price']) }}</p>
                             </div>
                         </a>
                     </div>
@@ -73,10 +63,24 @@
                     <p class="no-products">商品がありません</p>
                 @endforelse
             </div>
-
-            {{-- Laravelページネーション --}}
+            {{-- ページネーション（配列の場合は手動実装） --}}
             <div class="pagination">
-                {{ $products->appends(request()->query())->links() }}
+                @if(isset($currentPage) && isset($lastPage))
+                    @if($currentPage > 1)
+                        <a href="?page={{ $currentPage - 1 }}" class="pagination-link">＜</a>
+                    @endif
+
+                    @for($i = 1; $i <= $lastPage; $i++)
+                        <a href="?page={{ $i }}"
+                        class="pagination-link {{ $currentPage == $i ? 'active' : '' }}">
+                            {{ $i }}
+                        </a>
+                    @endfor
+
+                    @if($currentPage < $lastPage)
+                        <a href="?page={{ $currentPage + 1 }}" class="pagination-link">＞</a>
+                    @endif
+                @endif
             </div>
         </div>
     </div>
