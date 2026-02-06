@@ -39,7 +39,6 @@ textarea {
 }
 
 input[type="number"] {
-    /* スピナー非表示（普通の入力フォーム） */
     -moz-appearance: textfield;
 }
 
@@ -61,36 +60,32 @@ textarea {
     font-family: inherit;
 }
 
-/* 季節：シンプルな横並びチェックボックス */
 .season-grid {
     display: flex;
-    /* 横並び */
     gap: 20px;
-    /* 間隔 */
     margin-top: 8px;
     flex-wrap: wrap;
 }
 
+.season-grid+.error-message {
+    margin-top: 12px;
+    grid-column: 1 / -1;
+}
+
 .season-checkbox {
     display: flex !important;
-    /* ボタン風囲み削除 */
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    /* 最小限のパディング */
     border: none !important;
-    /* 枠線完全削除 */
     border-radius: 0 !important;
-    /* 角丸削除 */
     background: transparent !important;
-    /* 背景透明 */
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .season-checkbox:hover {
     background: #f0fdf4;
-    /* ホバー時のみ薄い背景 */
     border-radius: 6px;
 }
 
@@ -145,13 +140,14 @@ textarea {
     transform: translateY(-1px);
 }
 
-.error-messages {
+.error-message {
+    color: #dc2626;
+    font-size: 0.875em;
+    margin-top: 6px;
+    padding: 6px 8px;
     background: #fef2f2;
     border: 1px solid #fecaca;
-    color: #dc2626;
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 24px;
+    border-radius: 6px;
 }
 
 .error-messages ul {
@@ -163,7 +159,6 @@ textarea {
 @media (max-width: 640px) {
     .season-grid {
         flex-direction: column;
-        /* スマホでは縦並び */
         gap: 12px;
     }
 }

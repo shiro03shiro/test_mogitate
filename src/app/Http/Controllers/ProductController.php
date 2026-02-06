@@ -35,7 +35,7 @@ class ProductController extends Controller
         }
 
         $product = Product::create($data);
-        $product->seasons()->sync($request->seasons);
+        $product->seasons()->sync($request->input('seasons'));
 
         return redirect()->route('products.index')
             ->with('success', '商品を登録しました！');
