@@ -23,17 +23,19 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        if ($this->image) {
-            return Storage::disk('public')->url($this->image);
-        }
-        $englishNames = [
-            'キウイ' => 'kiwi', 'ストロベリー' => 'strawberry', 'オレンジ' => 'orange',
-            'スイカ' => 'watermelon', 'ピーチ' => 'peach', 'シャインマスカット' => 'muscat',
-            'パイナップル' => 'pineapple', 'ブドウ' => 'grapes', 'バナナ' => 'banana',
-            'メロン' => 'melon'
+        $imageNames = [
+            'kiwi.png',
+            'strawberry.png',
+            'orange.png',
+            'watermelon.png',
+            'peach.png',
+            'muscat.png',
+            'pineapple.png',
+            'grapes.png',
+            'banana.png',
+            'melon.png'
         ];
-
-        $imageName = $englishNames[$this->name] ?? 'default';
-        return asset("image/{$imageName}.jpg");
+        $index = ($this->id - 1) % 10;
+        return asset("images/products/{$imageNames[$index]}");
     }
 }
