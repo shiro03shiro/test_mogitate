@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label">価格（円）</label>
+            <label class="form-label">値段</label>
             <input type="number" name="price" value="{{ old('price') }}" min="0" required>
         </div>
 
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label">季節（複数選択可）</label>
+            <label class="form-label">季節</label>
             <div class="season-grid">
                 @foreach($seasons as $season)
                     <label class="season-checkbox">

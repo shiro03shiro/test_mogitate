@@ -38,6 +38,17 @@ textarea {
     background: #fafbfc;
 }
 
+input[type="number"] {
+    /* スピナー非表示（普通の入力フォーム） */
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 input:focus,
 textarea:focus {
     outline: none;
@@ -50,28 +61,37 @@ textarea {
     font-family: inherit;
 }
 
+/* 季節：シンプルな横並びチェックボックス */
 .season-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    display: flex;
+    /* 横並び */
+    gap: 20px;
+    /* 間隔 */
     margin-top: 8px;
+    flex-wrap: wrap;
 }
 
 .season-checkbox {
-    display: flex;
+    display: flex !important;
+    /* ボタン風囲み削除 */
     align-items: center;
     gap: 8px;
-    padding: 12px;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
+    padding: 8px 12px;
+    /* 最小限のパディング */
+    border: none !important;
+    /* 枠線完全削除 */
+    border-radius: 0 !important;
+    /* 角丸削除 */
+    background: transparent !important;
+    /* 背景透明 */
     cursor: pointer;
     transition: all 0.2s ease;
-    background: #f8fafc;
 }
 
 .season-checkbox:hover {
-    border-color: #10b981;
     background: #f0fdf4;
+    /* ホバー時のみ薄い背景 */
+    border-radius: 6px;
 }
 
 .season-checkbox input:checked+* {
@@ -142,10 +162,8 @@ textarea {
 
 @media (max-width: 640px) {
     .season-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-actions {
         flex-direction: column;
+        /* スマホでは縦並び */
+        gap: 12px;
     }
 }
