@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -18,7 +19,7 @@ class Product extends Model
     public function getImageUrlAttribute()
     {
         // 1. アップロード画像優先（storage内）
-        if ($this->image && Storage::disk('public')->exists($this->image)) {
+        if ($this->image) {
             return Storage::disk('public')->url($this->image);
         }
         // 2. public/image/内の静的画像（英語名で検索）
@@ -29,14 +30,7 @@ class Product extends Model
             'メロン' => 'melon'
         ];
 
-        $imageName = $englishNames[$this->name] ?? strtolower(str_replace([' ', '　'], '', $this->name));
-        $imagePath = "image/{$imageName}.jpg";
-
-        if (file_exists(public_path($imagePath))) {
-            return asset($imagePath);
-        }
-
-        // 3. デフォルト画像
-        return asset('image/default.jpg');
+        $imageName = $englishNames[$this->name] ?? 'default';
+        return asset("image/{$imageName}.jpg");
     }
 }

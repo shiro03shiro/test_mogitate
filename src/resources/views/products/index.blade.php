@@ -45,17 +45,15 @@
             <div class="product-grid">
                 @forelse($products as $product)
                     <div class="product-card">
-                        <a href="{{ route('products.detail', $product['id']) }}" class="product-card__link">
-                            @if(isset($product['image_path']) && $product['image_path'])
-                                <img src="{{ asset('storage/' . $product['image_path']) }}"
-                                    alt="{{ $product['name'] }}"
-                                    class="product-card__image">
-                            @else
-                                <div class="product-card__no-image">画像なし</div>
-                            @endif
+                        <a href="{{ route('products.detail', $product->id) }}" class="product-card__link">
+                            {{-- ModelのimageUrlアクセサを使用 --}}
+                            <img src="{{ $product->image_url }}"
+                                alt="{{ $product->name }}"
+                                class="product-card__image">
+
                             <div class="product-card__content">
-                                <h3 class="product-card__name">{{ $product['name'] }}</h3>
-                                <p class="product-card__price">¥{{ number_format($product['price']) }}</p>
+                                <h3 class="product-card__name">{{ $product->name }}</h3>
+                                <p class="product-card__price">¥{{ number_format($product->price) }}</p>
                             </div>
                         </a>
                     </div>
