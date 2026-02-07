@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\Season;
 use Illuminate\Http\Request;
@@ -27,10 +28,34 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'search', 'sort'));
     }
 
-    public function detail($productId)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($productId);
-        return view('products.detail', compact('product'));
+        $seasons = Season::all();
+        return view('products.edit', compact('product', 'seasons'));
+    }
+
+    public function update(ProductUpdateRequest $request, Product $product)
+    {
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $data['image'] = $request->file('image')->store('products', 'public');
+        }
+        $product->update($data);
+        $product->seasons()->detach();
+        if ($request->has('seasons')) {
+            $product->seasons()->attach($request->seasons);
+        }
+        return redirect()->route('products.detail', $product->id)
+            ->with('success', '商品情報を更新しました');
+    }
+
+    public function detail(Product $product)
+    {
+        $seasons = Season::all();
+        return view('products.detail', compact('product', 'seasons'));
     }
 
     public function register()

@@ -23,6 +23,9 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
+        if ($this->image && Storage::disk('public')->exists($this->image)) {
+            return Storage::url($this->image);
+        }
         $imageNames = [
             'kiwi.png',
             'strawberry.png',
