@@ -1,16 +1,18 @@
 /* メインコンテナ */
 .main-container {
-    max-width: 1230px;
+    max-width: 100%;
+    width: 100%;
     margin: 0;
+    padding: 0 30px;
     display: flex;
     gap: 30px;
     align-items: stretch;
+    box-sizing: border-box;
 }
-
 /* 左側エリア */
 .main-left {
     flex: 0 0 300px;
-    padding: 30px;
+    padding: 0;
 }
 
 .section__title h2 {
@@ -125,6 +127,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
+    width: 100%;
 }
 
 /* 商品カード */
