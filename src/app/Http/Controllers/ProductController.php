@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Season;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator; 
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -44,18 +45,44 @@ class ProductController extends Controller
         return view('products.register', compact('seasons'));
     }
 
-    public function store(ProductRequest $request)
+    public function create()
     {
-        $data = $request->validated();
+        return view('products.register', ['seasons' => Season::all()]);
+    }
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+    public function store(Request $request) // FormRequest外す
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0|max:10000',
+            'image' => 'required|image|mimes:png,jpeg',
+            'seasons' => 'required|array|min:1',
+            'seasons.*' => 'exists:seasons,id',
+            'description' => 'required|string|max:120',
+        ], [
+            'name.required' => '商品名を入力してください',
+            'price.required' => '値段を入力してください',
+            'image.required' => '画像を登録してください',
+            'image.mimes' => '「.png」または「.jpeg」形式でアップロードしてください',
+        ]);
+
+        if ($validator->fails()) {
+            // 画像を一時保存
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('temp/products', 'public');
+                $request->session()->flash('temp_image', $imagePath);
+            }
+            
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        $product = Product::create($data);
-        $product->seasons()->sync($request->input('seasons'));
-
-        return redirect()->route('products.index')
-            ->with('success', '商品を登録しました！');
+        // 正常保存
+        $data = $request->validated();
+        $data['image_path'] = $request->session()->get('temp_image');
+        Product::create($data);
+        
+        return redirect()->route('products.index');
     }
 }

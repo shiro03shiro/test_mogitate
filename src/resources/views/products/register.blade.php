@@ -32,14 +32,19 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label">
-                商品画像 <span class="required">必須</span>
-            </label>
+            <label>商品画像 <span class="required">必須</span></label>
             <input type="file" name="image" accept="image/*">
+            {{-- 一時保存画像表示 --}}
+            @if(session('temp_image'))
+                <div class="image-preview">
+                    <img src="{{ Storage::url(session('temp_image')) }}" class="img-preview">
+                </div>
+            @endif
             @error('image')
                 <div class="error-message">{{ $message }}</div>
             @enderror
         </div>
+
 
         <div class="form-group">
             <label class="form-label">

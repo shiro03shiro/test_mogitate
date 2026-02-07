@@ -15,7 +15,8 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0|max:10000',
-            'image' => 'required|image|mimes:png,jpeg|max:2048',
+            'image' => 'required:kept_image|image|mimes:png,jpeg',
+            'kept_image' => 'nullable|string',
             'seasons' => 'required|array|min:1',
             'seasons.*' => 'exists:seasons,id',
             'description' => 'required|string|max:120',
@@ -31,7 +32,6 @@ class ProductRequest extends FormRequest
             'price.min' => '0∼10000円以内で入力してください',
             'price.max' => '0∼10000円以内で入力してください',
             'image.required' => '画像を登録してください',
-            'image.image' => '「.png」または「.jpeg」形式でアップロードしてください',
             'image.mimes' => '「.png」または「.jpeg」形式でアップロードしてください',
             'seasons.required' => '季節を選択してください',
             'seasons.array' => '季節を選択してください',
