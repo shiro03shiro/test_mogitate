@@ -78,6 +78,58 @@
     background: #e6b800;
 }
 
+.main-left .sort-reset-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.main-left .sort-reset-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 2px solid #f5c800;
+    border-radius: 25px;
+    padding: 10px 14px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.main-left .sort-reset-btn:hover {
+    background: #f5c800;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 200, 0, 0.3);
+}
+
+.main-left .sort-reset-text {
+    font-weight: 500;
+}
+
+.main-left .sort-reset-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #f5c800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.main-left .sort-reset-btn:hover .sort-reset-icon {
+    background: #fff;
+    color: #f5c800;
+}
 /* 区切り線 */
 .divider {
     border: none;

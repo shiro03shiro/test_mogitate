@@ -13,18 +13,18 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $query = Product::query();
-        if ($search = $request->get('search')) {
+        $search = $request->get('search');
+        if ($search) {
             $query->where('name', 'like', "%{$search}%");
         }
-        if ($sort = $request->get('sort')) {
-            if ($sort === 'price_asc') {
-                $query->orderBy('price', 'asc');
-            } elseif ($sort === 'price_desc') {
-                $query->orderBy('price', 'desc');
-            }
+        $sort = $request->get('sort');
+        if ($sort === 'price_asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sort === 'price_desc') {
+            $query->orderBy('price', 'desc');
         }
         $products = $query->paginate(6)->withQueryString();
-        return view('products.index', compact('products', 'search'));
+        return view('products.index', compact('products', 'search', 'sort'));
     }
 
     public function detail($productId)
