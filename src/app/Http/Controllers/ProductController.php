@@ -23,8 +23,8 @@ class ProductController extends Controller
                 $query->orderBy('price', 'desc');
             }
         }
-        $products = $query->paginate(6);
-        return view('products.index', compact('products'));
+        $products = $query->paginate(6)->withQueryString();
+        return view('products.index', compact('products', 'search'));
     }
 
     public function detail($productId)
@@ -49,7 +49,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
             $data = $request->validated();
-            $data['image_path'] = $path;
+            $data['image'] = $path;
             Product::create($data);
         }
         return redirect()->route('products.index');

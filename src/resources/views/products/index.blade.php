@@ -10,10 +10,13 @@
         {{-- 左側：検索エリア --}}
         <div class="main-left">
             <div class="section__title">
-                <h2>商品一覧</h2>
+                @if(!empty($search))
+                    <h2>「{{ $search }}」の商品一覧</h2>
+                @else
+                    <h2>商品一覧</h2>
+                @endif
             </div>
             <form class="search-form" method="GET" action="{{ route('products.index') }}">
-                @csrf
                 <div class="search-form__item">
                     <input class="search-form__item-input"
                         type="text"
