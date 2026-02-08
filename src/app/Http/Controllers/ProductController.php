@@ -28,7 +28,6 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'search', 'sort'));
     }
 
-    // ↓↓↓ 修正箇所1: Product $product → $productId
     public function detail($productId)
     {
         $product = Product::with('seasons')->findOrFail($productId);
@@ -36,7 +35,6 @@ class ProductController extends Controller
         return view('products.detail', compact('product', 'seasons'));
     }
 
-    // ↓↓↓ 修正箇所2: Product $product → $productId  
     public function edit($productId)
     {
         $product = Product::with('seasons')->findOrFail($productId);
@@ -54,7 +52,8 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+            $originalName = $request->file('image')->getClientOriginalName();
+            $data['image'] = $request->file('image')->storeAs('products', $originalName, 'public');
         }
         $product = Product::create($data);
         if ($request->has('seasons')) {
@@ -63,7 +62,6 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', '商品を登録しました');
     }
 
-    // ↓↓↓ 修正箇所3: Product $product → $productId
     public function update(ProductUpdateRequest $request, $productId)
     {
         $product = Product::findOrFail($productId);
@@ -72,7 +70,8 @@ class ProductController extends Controller
             if ($product->image && Storage::disk('public')->exists($product->image)) {
                 Storage::disk('public')->delete($product->image);
             }
-            $data['image'] = $request->file('image')->store('products', 'public');
+            $originalName = $request->file('image')->getClientOriginalName();
+            $data['image'] = $request->file('image')->storeAs('products', $originalName, 'public');
         }
         $product->update($data);
         $product->seasons()->detach();
