@@ -23,7 +23,6 @@
                 @endif
                 <div class="file-field">
                     <input type="file" name="image" id="imageInput" accept="image/png,image/jpeg">
-                    <span class="file-name">{{ basename($product->image ?? '')}}</span>
                 </div>
             </div>
 
