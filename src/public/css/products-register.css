@@ -106,6 +106,69 @@ textarea {
     accent-color: #10b981;
 }
 
+.season-checkbox {
+    position: relative;
+    padding-left: 32px !important;
+    display: inline-flex !important;
+    align-items: center;
+}
+
+.custom-checkbox {
+    position: absolute !important;
+    left: 0;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.season-checkbox:has(.custom-checkbox:not(:checked))::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background: white;
+}
+
+.season-checkbox:has(.custom-checkbox:checked)::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background: black;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.season-checkbox:hover::before {
+    border-color: white;
+}
+
+.season-checkbox input:checked+* {
+    font-weight: 600;
+    color: white;
+}
+
+.season-checkbox input {
+    accent-color: transparent !important;
+}
+
 .form-actions {
     display: flex;
     gap: 16px;

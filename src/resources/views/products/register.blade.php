@@ -60,7 +60,7 @@
             <div class="season-grid">
                 @foreach($seasons as $season)
                     <label class="season-checkbox">
-                        <input type="checkbox" name="seasons[]" value="{{ $season->id }}"
+                        <input type="checkbox" name="seasons[]" value="{{ $season->id }}" class="custom-checkbox"
                             {{ in_array($season->id, old('seasons', [])) ? 'checked' : '' }}>
                         {{ $season->name }}
                     </label>
