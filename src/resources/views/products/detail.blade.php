@@ -6,10 +6,6 @@
 
 @section('content')
 <div class="product-detail-container editing">
-    {{-- メッセージ --}}
-    @if(session('success'))
-        <div class="success">{{ session('success') }}</div>
-    @endif
     @if ($errors->any())
         <div class="error">
             <ul>
@@ -43,7 +39,7 @@
                 {{-- ファイル選択（1つだけ） --}}
                 <div class="file-field">
                     <input type="file" name="image" id="imageInput" accept="image/png,image/jpeg">
-                    <span class="file-name">{{ basename($product->image ?? '') ?: '選択されていません' }}</span>
+                    <span class="file-name">{{ basename($product->image ?? '')}}</span>
                 </div>
             </div>
 
