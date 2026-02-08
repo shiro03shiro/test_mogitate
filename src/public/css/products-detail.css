@@ -94,22 +94,21 @@
 .file-field {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    justify-content: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
-.file-field .btn {
-    padding: 5px 10px;
-    min-width: auto;
-    white-space: nowrap;
+.file-input {
+    display: none;
 }
 
 .file-name {
     font-size: 14px;
     color: #666;
+    white-space: nowrap;
     max-width: 200px;
-    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .form-group.description {
