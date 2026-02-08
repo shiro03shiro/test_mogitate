@@ -5,99 +5,101 @@
 @endsection
 
 @section('content')
-<div class="product-detail-container editing">
-    <div class="breadcrumb">
-        <a href="{{ route('products.index') }}" class="link">商品一覧</a> ＞
-        <span class="current">{{ old('name', $product->name) }}</span>
-    </div>
-
-    <form id="productForm" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf @method('PUT')
-
-        <div class="product-main">
-            <div class="product-image">
-                @if($product->image_url)
-                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image__img">
-                @else
-                    <div class="no-image">画像なし</div>
-                @endif
-                <div class="file-field">
-                    <input type="file" name="image" id="imageInput" accept="image/png,image/jpeg">
-                </div>
-            </div>
-
-            <div class="product-info">
-                <div class="form-group">
-                    <label>商品名</label>
-                    <input type="text" name="name" value="{{ old('name', $product->name) }}" class="form-display">
-                    @if($errors->has('name'))
-                        <div class="error-messages">
-                            @foreach($errors->get('name') as $message)
-                                <div class="error-message">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-
-                <div class="form-group">
-                    <label>値段</label>
-                    <input type="text" name="price" value="{{ old('price', $product->price) }}" class="form-display">
-                    @if($errors->has('price'))
-                        <div class="error-messages">
-                            @foreach($errors->get('price') as $message)
-                                <div class="error-message">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-
-                <div class="form-group season">
-                    <label>季節</label>
-                    <div class="season-options">
-                        @foreach($seasons as $season)
-                            <label class="season-checkbox" style="cursor:pointer;">
-                                <input type="checkbox" name="seasons[]" value="{{ $season->id }}" class="custom-checkbox"
-                                    {{ $product->seasons->contains($season->id) || in_array($season->id, old('seasons', [])) ? 'checked' : '' }}>
-                                <span>{{ $season->name }}</span>
-                            </label>
-                        @endforeach
-                    </div>
-                    @if($errors->has('seasons'))
-                        <div class="error-messages">
-                            @foreach($errors->get('seasons') as $message)
-                                <div class="error-message">{{ $message }}</div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
+<div class="body">
+    <div class="product-detail-container editing">
+        <div class="breadcrumb">
+            <a href="{{ route('products.index') }}" class="link">商品一覧</a> ＞
+            <span class="current">{{ old('name', $product->name) }}</span>
         </div>
 
-        <div class="product-extra">
-            {{-- 商品説明 --}}
-            <div class="form-group description">
-                <label>商品説明</label>
-                <textarea name="description" class="form-display" rows="4">{{ old('description', $product->description) }}</textarea>
-                @if($errors->has('description'))
-                    <div class="error-messages">
-                        @foreach($errors->get('description') as $message)
-                            <div class="error-message">{{ $message }}</div>
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-        </div>
-    </form>
-</div>
+        <form id="productForm" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf @method('PUT')
 
-<div class="action-buttons">
-    <div class="btn-group">
-        <a href="{{ route('products.index') }}" class="btn btn-back">戻る</a>
-            <button type="submit" form="productForm" class="btn btn-save primary">変更を保存</button>
-    </div>
-        <form action="{{ route('products.delete', $product->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('本当に{{ $product->name }}を削除しますか？')">
-            @csrf @method('DELETE')
-            <button type="submit" class="btn btn-delete delete">🗑</button>
+            <div class="product-main">
+                <div class="product-image">
+                    @if($product->image_url)
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image__img">
+                    @else
+                        <div class="no-image">画像なし</div>
+                    @endif
+                    <div class="file-field">
+                        <input type="file" name="image" id="imageInput" accept="image/png,image/jpeg">
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <div class="form-group">
+                        <label>商品名</label>
+                        <input type="text" name="name" value="{{ old('name', $product->name) }}" class="form-display">
+                        @if($errors->has('name'))
+                            <div class="error-messages">
+                                @foreach($errors->get('name') as $message)
+                                    <div class="error-message">{{ $message }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label>値段</label>
+                        <input type="text" name="price" value="{{ old('price', $product->price) }}" class="form-display">
+                        @if($errors->has('price'))
+                            <div class="error-messages">
+                                @foreach($errors->get('price') as $message)
+                                    <div class="error-message">{{ $message }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group season">
+                        <label>季節</label>
+                        <div class="season-options">
+                            @foreach($seasons as $season)
+                                <label class="season-checkbox" style="cursor:pointer;">
+                                    <input type="checkbox" name="seasons[]" value="{{ $season->id }}" class="custom-checkbox"
+                                        {{ $product->seasons->contains($season->id) || in_array($season->id, old('seasons', [])) ? 'checked' : '' }}>
+                                    <span>{{ $season->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        @if($errors->has('seasons'))
+                            <div class="error-messages">
+                                @foreach($errors->get('seasons') as $message)
+                                    <div class="error-message">{{ $message }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-extra">
+                {{-- 商品説明 --}}
+                <div class="form-group description">
+                    <label>商品説明</label>
+                    <textarea name="description" class="form-display" rows="4">{{ old('description', $product->description) }}</textarea>
+                    @if($errors->has('description'))
+                        <div class="error-messages">
+                            @foreach($errors->get('description') as $message)
+                                <div class="error-message">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </div>
         </form>
+    </div>
+
+    <div class="action-buttons">
+        <div class="btn-group">
+            <a href="{{ route('products.index') }}" class="btn btn-back">戻る</a>
+                <button type="submit" form="productForm" class="btn btn-save primary">変更を保存</button>
+        </div>
+            <form action="{{ route('products.delete', $product->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('本当に{{ $product->name }}を削除しますか？')">
+                @csrf @method('DELETE')
+                <button type="submit" class="btn btn-delete delete">🗑</button>
+            </form>
+    </div>
 </div>
 @endsection
