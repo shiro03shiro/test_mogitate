@@ -23,22 +23,25 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        if ($this->image && Storage::disk('public')->exists($this->image)) {
-            return Storage::url($this->image);
+        // アップロード画像優先
+        if ($this->image) {
+            $url = Storage::disk('public')->url($this->image);
+            if (Storage::disk('public')->exists($this->image)) {
+                return $url;
+            }
         }
-        $imageNames = [
-            'kiwi.png',
-            'strawberry.png',
-            'orange.png',
-            'watermelon.png',
-            'peach.png',
-            'muscat.png',
-            'pineapple.png',
-            'grapes.png',
-            'banana.png',
-            'melon.png'
-        ];
-        $index = ($this->id - 1) % 10;
-        return asset("images/products/{$imageNames[$index]}");
+
+        // 保存済み商品のみデフォルト画像
+        if ($this->exists && $this->id) {
+            $imageNames = [
+                'kiwi.png', 'strawberry.png', 'orange.png', 'watermelon.png',
+                'peach.png', 'muscat.png', 'pineapple.png', 'grapes.png',
+                'banana.png', 'melon.png'
+            ];
+            $index = ($this->id - 1) % 10;
+            return asset("images/products/{$imageNames[$index]}");
+        }
+
+        return asset('images/no-image.png');
     }
 }

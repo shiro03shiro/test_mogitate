@@ -28,14 +28,18 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'search', 'sort'));
     }
 
-    public function detail(Product $product)
+    // ↓↓↓ 修正箇所1: Product $product → $productId
+    public function detail($productId)
     {
+        $product = Product::with('seasons')->findOrFail($productId);
         $seasons = Season::all();
         return view('products.detail', compact('product', 'seasons'));
     }
 
-    public function edit(Product $product)
+    // ↓↓↓ 修正箇所2: Product $product → $productId  
+    public function edit($productId)
     {
+        $product = Product::with('seasons')->findOrFail($productId);
         $seasons = Season::all();
         return view('products.detail', compact('product', 'seasons'));
     }
@@ -59,8 +63,10 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', '商品を登録しました');
     }
 
-    public function update(ProductUpdateRequest $request, Product $product)
+    // ↓↓↓ 修正箇所3: Product $product → $productId
+    public function update(ProductUpdateRequest $request, $productId)
     {
+        $product = Product::findOrFail($productId);
         $data = $request->validated();
         if ($request->hasFile('image')) {
             if ($product->image && Storage::disk('public')->exists($product->image)) {
@@ -87,10 +93,11 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success', '商品を削除しました');
     }
+
     public function search(Request $request)
     {
         $query = Product::query();
-        $search = $request->get('q'); // index.blade.phpのname="q"に対応
+        $search = $request->get('q');
         if ($search) {
             $query->where('name', 'like', "%{$search}%");
         }
