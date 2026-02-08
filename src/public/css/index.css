@@ -1,4 +1,3 @@
-/* メインコンテナ */
 .main-container {
     max-width: 100%;
     width: 100%;
@@ -9,7 +8,7 @@
     align-items: stretch;
     box-sizing: border-box;
 }
-/* 左側エリア */
+
 .main-left {
     flex: 0 0 300px;
     padding: 0;
@@ -22,7 +21,6 @@
     font-weight: bold;
 }
 
-/* 検索フォーム */
 .search-form {
     display: flex;
     flex-direction: column;
@@ -130,7 +128,7 @@
     background: #fff;
     color: #f5c800;
 }
-/* 区切り線 */
+
 .divider {
     border: none;
     height: 1px;
@@ -138,14 +136,12 @@
     margin: 30px 0;
 }
 
-/* 右側エリア */
 .main-right {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-/* 追加ボタン */
 .add-product {
     display: flex;
     justify-content: flex-end;
@@ -174,7 +170,6 @@
     box-shadow: 0 6px 16px rgba(245, 200, 0, 0.4);
 }
 
-/* 商品グリッド */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -182,7 +177,6 @@
     width: 100%;
 }
 
-/* 商品カード */
 .product-card {
     background: #fff;
     border-radius: 16px;
@@ -202,16 +196,27 @@
     color: inherit;
 }
 
-.product-card__image {
+.product-card__image-container {
     width: 100%;
     height: 200px;
+    /* 固定高さでレイアウト統一 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+}
+
+.product-card__image {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-.product-card__no-image {
+.no-image-placeholder {
     width: 100%;
-    height: 200px;
-    background: #f8f8f8;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -254,7 +259,6 @@
     padding-left: 8px;
 }
 
-/* ページネーション（手動・確実） */
 .pagination {
     display: flex;
     justify-content: center;
@@ -307,7 +311,6 @@
     margin: 60px 0;
 }
 
-/* レスポンシブ */
 @media (max-width: 768px) {
     .main-container {
         flex-direction: column;

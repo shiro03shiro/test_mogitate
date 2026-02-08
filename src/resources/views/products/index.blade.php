@@ -54,15 +54,16 @@
             <div class="product-grid">
                 @forelse($products as $product)
                     <div class="product-card">
-                        @if($product->image_url)
-                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-card__image">
-                        @else
-                            <div class="no-image-placeholder">画像なし</div>
-                        @endif
                         <a href="{{ route('products.detail', $product->id) }}" class="product-card__link">
-                            <img src="{{ $product->image_url }}"
-                                alt="{{ $product->name }}"
-                                class="product-card__image">
+                            <div class="product-card__image-container">
+                                @if($product->image_url)
+                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-card__image">
+                                @else
+                                    <div class="no-image-placeholder">
+                                        <span>画像なし</span>
+                                    </div>
+                                @endif
+                            </div>
                             <div class="product-card__content">
                                 <h3 class="product-card__name">{{ $product->name }}</h3>
                                 <p class="product-card__price">¥{{ number_format($product->price) }}</p>
