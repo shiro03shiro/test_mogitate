@@ -127,23 +127,20 @@ textarea {
 }
 
 .btn-register {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: #f5c800;
     color: white;
 }
 
 .btn-register:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }
 
 .btn-back {
-    background: #6b7280;
-    color: white;
+    background: #eeeeee;
 }
 
 .btn-back:hover {
-    background: #4b5563;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .error-message {

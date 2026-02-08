@@ -198,7 +198,6 @@
     box-sizing: border-box;
 }
 
-/* 編集モードスタイル */
 .editing input,
 .editing textarea,
 .editing .season-options input {
@@ -224,10 +223,5 @@
 
 .error {
     color: red;
-    margin-bottom: 20px;
-}
-
-.success {
-    color: green;
     margin-bottom: 20px;
 }

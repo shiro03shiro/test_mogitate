@@ -70,8 +70,8 @@
         </div>
 
         <div class="form-actions">
+            <a href="{{ route('products.index') }}" class="btn-back">戻る</a>
             <button type="submit" class="btn-register">登録</button>
-            <a href="{{ route('products.index') }}" class="btn-back">一覧に戻る</a>
         </div>
     </form>
 </div>
