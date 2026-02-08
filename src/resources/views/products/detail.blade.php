@@ -19,7 +19,7 @@
                 @if($product->image_url)
                     <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image__img">
                 @else
-                    <div class="no-image">プレビュー画像なし</div>
+                    <div class="no-image">画像なし</div>
                 @endif
                 <div class="file-field">
                     <input type="file" name="image" id="imageInput" accept="image/png,image/jpeg">

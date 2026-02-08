@@ -7,7 +7,6 @@
 @section('content')
 <div class="body">
     <div class="main-container">
-        {{-- 左側：検索エリア --}}
         <div class="main-left">
             <div class="section__title">
                 @if(!empty($search))
@@ -16,8 +15,6 @@
                     <h2>商品一覧</h2>
                 @endif
             </div>
-            
-            {{-- PG05要件対応：検索は /products/search に送信 --}}
             <form class="search-form" method="GET" action="{{ route('products.search') }}">
                 <div class="search-form__item">
                     <input class="search-form__item-input"
@@ -28,7 +25,6 @@
                 <div class="search-form__button">
                     <button class="search-form__button-submit" type="submit">検索</button>
                 </div>
-                {{-- 並び替えセレクト --}}
                 <div class="search-form__item">
                     <h3>価格順で表示</h3>
                     <select class="search-form__item-select" name="sort" onchange="this.form.submit()">
@@ -38,7 +34,6 @@
                     </select>
                 </div>
             </form>
-            
             @if(!empty($sort))
                 @php
                     $sortText = $sort === 'price_asc' ? '安い順に表示' : '高い順に表示';
@@ -52,18 +47,18 @@
             @endif
             <hr class="divider">
         </div>
-        
-        {{-- 右側：コンテンツエリア --}}
         <div class="main-right">
-            {{-- 右上：追加ボタン --}}
             <div class="add-product">
                 <a href="{{ route('products.register') }}" class="add-product__btn">＋商品を追加</a>
             </div>
-            
-            {{-- 商品グリッド --}}
             <div class="product-grid">
                 @forelse($products as $product)
                     <div class="product-card">
+                        @if($product->image_url)
+                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-card__image">
+                        @else
+                            <div class="no-image-placeholder">画像なし</div>
+                        @endif
                         <a href="{{ route('products.detail', $product->id) }}" class="product-card__link">
                             <img src="{{ $product->image_url }}"
                                 alt="{{ $product->name }}"
@@ -78,8 +73,6 @@
                     <p class="no-products">商品がありません</p>
                 @endforelse
             </div>
-            
-            {{-- ページネーション --}}
             <div class="pagination">
                 @if($products->hasPages())
                     @if($products->onFirstPage())

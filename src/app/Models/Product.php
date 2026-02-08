@@ -11,10 +11,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'price', 'image', 'description'];
-
-    protected $casts = [
-        'price' => 'integer',
-    ];
+    protected $casts = ['price' => 'integer'];
 
     public function seasons()
     {
@@ -23,25 +20,18 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        // アップロード画像優先
-        if ($this->image) {
-            $url = Storage::disk('public')->url($this->image);
-            if (Storage::disk('public')->exists($this->image)) {
-                return $url;
-            }
+        if ($this->image && Storage::disk('public')->exists($this->image)) {
+            return Storage::disk('public')->url($this->image);
         }
-
-        // 保存済み商品のみデフォルト画像
+        $dummyImages = [
+            'kiwi.png', 'strawberry.png', 'orange.png', 'watermelon.png',
+            'peach.png', 'muscat.png', 'pineapple.png', 'grapes.png',
+            'banana.png', 'melon.png'
+        ];
         if ($this->exists && $this->id) {
-            $imageNames = [
-                'kiwi.png', 'strawberry.png', 'orange.png', 'watermelon.png',
-                'peach.png', 'muscat.png', 'pineapple.png', 'grapes.png',
-                'banana.png', 'melon.png'
-            ];
             $index = ($this->id - 1) % 10;
-            return asset("images/products/{$imageNames[$index]}");
+            return asset("images/products/{$dummyImages[$index]}");
         }
-
-        return asset('images/no-image.png');
+        return null;
     }
 }
