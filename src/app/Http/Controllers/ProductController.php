@@ -34,29 +34,29 @@ class ProductController extends Controller
         return view('products.detail', compact('product', 'seasons'));
     }
 
+    public function edit(Product $product)
+    {
+        $seasons = Season::all();
+        return view('products.detail', compact('product', 'seasons'));
+    }
+
     public function register()
     {
         $seasons = Season::all();
         return view('products.register', compact('seasons'));
     }
 
-    public function create()
-    {
-        return view('products.register', ['seasons' => Season::all()]);
-    }
-
     public function store(ProductRequest $request)
     {
+        $data = $request->validated();
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $data = $request->validated();
-            $data['image'] = $path;
-            $product = Product::create($data);
-            if ($request->has('seasons')) {
-                $product->seasons()->attach($request->seasons);
-            }
+            $data['image'] = $request->file('image')->store('products', 'public');
         }
-        return redirect()->route('products.index');
+        $product = Product::create($data);
+        if ($request->has('seasons')) {
+            $product->seasons()->attach($request->seasons);
+        }
+        return redirect()->route('products.index')->with('success', '商品を登録しました');
     }
 
     public function update(ProductUpdateRequest $request, Product $product)
@@ -87,10 +87,20 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success', '商品を削除しました');
     }
-
-    public function deleteForm($productId)
+    public function search(Request $request)
     {
-        $product = Product::findOrFail($productId);
-        return view('products.delete', compact('product'));
-}
+        $query = Product::query();
+        $search = $request->get('q'); // index.blade.phpのname="q"に対応
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+        $sort = $request->get('sort');
+        if ($sort === 'price_asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sort === 'price_desc') {
+            $query->orderBy('price', 'desc');
+        }
+        $products = $query->paginate(6)->withQueryString();
+        return view('products.index', compact('products', 'search', 'sort'));
+    }
 }

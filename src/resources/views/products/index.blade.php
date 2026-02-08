@@ -13,15 +13,17 @@
                 @if(!empty($search))
                     <h2>「{{ $search }}」の商品一覧</h2>
                 @else
-                    <h2>商品一覧</h2> {{-- 並び替え時も「商品一覧」のまま --}}
+                    <h2>商品一覧</h2>
                 @endif
             </div>
-            <form class="search-form" method="GET" action="{{ route('products.index') }}">
+            
+            {{-- PG05要件対応：検索は /products/search に送信 --}}
+            <form class="search-form" method="GET" action="{{ route('products.search') }}">
                 <div class="search-form__item">
                     <input class="search-form__item-input"
-                        type="text" name="search"
+                        type="text" name="q"
                         placeholder="商品名で検索"
-                        value="{{ request('search') }}">
+                        value="{{ $search ?? request('q') }}">
                 </div>
                 <div class="search-form__button">
                     <button class="search-form__button-submit" type="submit">検索</button>
@@ -31,11 +33,12 @@
                     <h3>価格順で表示</h3>
                     <select class="search-form__item-select" name="sort" onchange="this.form.submit()">
                         <option value="">価格で並べ替え</option>
-                        <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>安い順に表示</option>
-                        <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>高い順に表示</option>
+                        <option value="price_asc" {{ ($sort ?? request('sort')) == 'price_asc' ? 'selected' : '' }}>安い順に表示</option>
+                        <option value="price_desc" {{ ($sort ?? request('sort')) == 'price_desc' ? 'selected' : '' }}>高い順に表示</option>
                     </select>
                 </div>
             </form>
+            
             @if(!empty($sort))
                 @php
                     $sortText = $sort === 'price_asc' ? '安い順に表示' : '高い順に表示';
@@ -49,12 +52,14 @@
             @endif
             <hr class="divider">
         </div>
+        
         {{-- 右側：コンテンツエリア --}}
         <div class="main-right">
             {{-- 右上：追加ボタン --}}
             <div class="add-product">
                 <a href="{{ route('products.register') }}" class="add-product__btn">＋商品を追加</a>
             </div>
+            
             {{-- 商品グリッド --}}
             <div class="product-grid">
                 @forelse($products as $product)
@@ -63,7 +68,6 @@
                             <img src="{{ $product->image_url }}"
                                 alt="{{ $product->name }}"
                                 class="product-card__image">
-
                             <div class="product-card__content">
                                 <h3 class="product-card__name">{{ $product->name }}</h3>
                                 <p class="product-card__price">¥{{ number_format($product->price) }}</p>
@@ -74,16 +78,15 @@
                     <p class="no-products">商品がありません</p>
                 @endforelse
             </div>
-            {{-- ページネーション（手動実装・確実動作） --}}
+            
+            {{-- ページネーション --}}
             <div class="pagination">
                 @if($products->hasPages())
-                    {{-- 前のページ --}}
                     @if($products->onFirstPage())
                         <span class="pagination-link disabled">＜</span>
                     @else
                         <a href="{{ $products->previousPageUrl() }}" class="pagination-link">＜</a>
                     @endif
-                    {{-- ページ番号 --}}
                     @foreach($products->getUrlRange(1, $products->lastPage()) as $page => $url)
                         @if($page == $products->currentPage())
                             <span class="pagination-link active">{{ $page }}</span>
@@ -91,7 +94,6 @@
                             <a href="{{ $url }}" class="pagination-link">{{ $page }}</a>
                         @endif
                     @endforeach
-                    {{-- 次のページ --}}
                     @if($products->hasMorePages())
                         <a href="{{ $products->nextPageUrl() }}" class="pagination-link">＞</a>
                     @else
