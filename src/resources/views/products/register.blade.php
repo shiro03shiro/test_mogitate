@@ -59,10 +59,10 @@
             </label>
             <div class="season-grid">
                 @foreach($seasons as $season)
-                    <label class="season-checkbox">
+                    <label class="season-checkbox" style="cursor:pointer;">
                         <input type="checkbox" name="seasons[]" value="{{ $season->id }}" class="custom-checkbox"
                             {{ in_array($season->id, old('seasons', [])) ? 'checked' : '' }}>
-                        {{ $season->name }}
+                        <span>{{ $season->name }}</span>
                     </label>
                 @endforeach
             </div>

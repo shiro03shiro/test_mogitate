@@ -55,10 +55,10 @@
                     <label>季節</label>
                     <div class="season-options">
                         @foreach($seasons as $season)
-                            <label style="cursor:pointer;">
+                            <label class="season-checkbox" style="cursor:pointer;">
                                 <input type="checkbox" name="seasons[]" value="{{ $season->id }}" class="custom-checkbox"
                                     {{ $product->seasons->contains($season->id) || in_array($season->id, old('seasons', [])) ? 'checked' : '' }}>
-                                {{ $season->name }}
+                                <span>{{ $season->name }}</span>
                             </label>
                         @endforeach
                     </div>

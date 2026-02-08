@@ -73,48 +73,25 @@ textarea {
     font-weight: 500;
 }
 
-.season-grid+.error-message {
-    margin-top: 12px;
-    grid-column: 1 / -1;
-}
-
 .season-checkbox {
-    display: flex !important;
+    position: relative;
+    padding-left: 42px;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
+    gap: 10px;
+    padding: 10px 30px;
     cursor: pointer;
     transition: all 0.2s ease;
+    color: black;
 }
 
 .season-checkbox:hover {
-    background: #f0fdf4;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 6px;
 }
 
-.season-checkbox input:checked+* {
-    font-weight: 600;
-    color: #10b981;
-}
-
-.season-checkbox input {
-    width: 18px;
-    height: 18px;
-    accent-color: #10b981;
-}
-
-.season-checkbox {
-    position: relative;
-    padding-left: 32px !important;
-    display: inline-flex !important;
-    align-items: center;
-}
-
 .custom-checkbox {
-    position: absolute !important;
+    position: absolute;
     left: 0;
     opacity: 0;
     width: 20px;
@@ -144,7 +121,7 @@ textarea {
     transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    border: 2px solid black;
+    border: 2px solid white;
     border-radius: 50%;
     background: black;
     color: white;
@@ -156,17 +133,20 @@ textarea {
     line-height: 1;
 }
 
-.season-checkbox:hover::before {
-    border-color: white;
+.season-checkbox:hover:has(.custom-checkbox:not(:checked))::before {
+    background: white;
+    border-color: black;
 }
 
 .season-checkbox input:checked+* {
     font-weight: 600;
-    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .season-checkbox input {
-    accent-color: transparent !important;
+    accent-color: transparent;
+    width: 20px;
+    height: 20px;
 }
 
 .form-actions {
