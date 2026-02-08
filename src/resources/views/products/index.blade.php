@@ -10,7 +10,7 @@
         <div class="main-left">
             <div class="section__title">
                 @if(!empty($search))
-                    <h2>「{{ $search }}」の商品一覧</h2>
+                    <h2>”{{ $search }}”の商品一覧</h2>
                 @else
                     <h2>商品一覧</h2>
                 @endif

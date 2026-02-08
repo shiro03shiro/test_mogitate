@@ -37,7 +37,7 @@
 .product-image img {
     width: 100%;
     height: 250px;
-    border: 1px solid #ccc;
+    border: 2px solid #ddd;
     object-fit: cover;
     display: block;
 }
@@ -54,7 +54,6 @@
 
 .form-group label {
     display: block;
-    font-weight: bold;
     margin-bottom: 5px;
     text-align: left;
 }
@@ -108,7 +107,7 @@ label:has(.custom-checkbox:not(:checked))::before {
     top: 0;
     width: 20px;
     height: 20px;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 50%;
     background: white;
 }
@@ -120,7 +119,7 @@ label:has(.custom-checkbox:checked)::before {
     top: 0;
     width: 20px;
     height: 20px;
-    border: 2px solid white;
+    border: 1px solid white;
     border-radius: 50%;
     background: black;
     color: white;
@@ -162,7 +161,7 @@ label:has(.custom-checkbox:checked)::before {
     display: flex;
     justify-content: center;
     gap: 16px;
-    min-width: 260px;
+    min-width: 400px;
     flex-shrink: 0;
 }
 
@@ -176,24 +175,23 @@ label:has(.custom-checkbox:checked)::before {
     align-items: center;
     justify-content: center;
     background-color: #eee;
+    color: black;
     padding: 8px 16px;
 }
 
 .btn-back,
 .btn-save {
     min-width: 100px;
-    max-width: 140px;
+    max-width: 160px;
     flex: 1;
 }
 
 .btn.primary {
     background-color: #f5c800;
-    color: white;
 }
 
 .btn.btn-secondary {
     background-color: #6c757d;
-    color: white;
 }
 
 .btn.btn-warning {
@@ -223,10 +221,8 @@ label:has(.custom-checkbox:checked)::before {
     box-sizing: border-box;
 }
 
-.editing input,
 .editing textarea,
 .editing .season-options input {
-    border: 2px solid #f5c800 !important;
     background: white;
 }
 
@@ -238,7 +234,7 @@ label:has(.custom-checkbox:checked)::before {
 
 .product-detail-container.editing .form-display {
     background: white;
-    border: 2px solid #f5c800;
+    border: 2px solid #e1e5e9;
 }
 
 .product-detail-container:not(.editing) .form-display.readonly {
