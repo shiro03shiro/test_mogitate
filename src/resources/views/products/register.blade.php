@@ -16,9 +16,13 @@
                 商品名 <span class="required">必須</span>
             </label>
             <input type="text" name="name" value="{{ old('name') }}" placeholder="商品名を入力">
-            @error('name')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+            @if($errors->has('name'))
+                <div class="error-messages">
+                    @foreach($errors->get('name') as $message)
+                        <div class="error-message">{{ $message }}</div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group">
@@ -26,9 +30,13 @@
                 値段 <span class="required">必須</span>
             </label>
             <input type="text" name="price" value="{{ old('price') }}" placeholder="値段を入力">
-            @error('price')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+            @if($errors->has('price'))
+                <div class="error-messages">
+                    @foreach($errors->get('price') as $message)
+                        <div class="error-message">{{ $message }}</div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group">
@@ -36,9 +44,13 @@
                 商品画像 <span class="required">必須</span>
             </label>
             <input type="file" name="image" accept="image/*">
-            @error('image')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+            @if($errors->has('image'))
+                <div class="error-messages">
+                    @foreach($errors->get('image') as $message)
+                        <div class="error-message">{{ $message }}</div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group">
@@ -54,9 +66,13 @@
                     </label>
                 @endforeach
             </div>
-            @error('seasons')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+                @if($errors->has('seasons'))
+                    <div class="error-messages">
+                        @foreach($errors->get('seasons') as $message)
+                            <div class="error-message">{{ $message }}</div>
+                        @endforeach
+                    </div>
+                @endif
         </div>
 
         <div class="form-group">
@@ -64,9 +80,13 @@
                 商品説明 <span class="required">必須</span>
             </label>
             <textarea name="description" rows="4" placeholder="商品の説明を入力">{{ old('description') }}</textarea>
-            @error('description')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+            @if($errors->has('description'))
+                <div class="error-messages">
+                    @foreach($errors->get('description') as $message)
+                        <div class="error-message">{{ $message }}</div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-actions">

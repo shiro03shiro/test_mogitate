@@ -30,17 +30,25 @@
                 <div class="form-group">
                     <label>商品名</label>
                     <input type="text" name="name" value="{{ old('name', $product->name) }}" class="form-display">
-                    @error('name')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
+                    @if($errors->has('name'))
+                        <div class="error-messages">
+                            @foreach($errors->get('name') as $message)
+                                <div class="error-message">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
 
                 <div class="form-group">
                     <label>値段</label>
                     <input type="text" name="price" value="{{ old('price', $product->price) }}" class="form-display">
-                    @error('price')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
+                    @if($errors->has('price'))
+                        <div class="error-messages">
+                            @foreach($errors->get('price') as $message)
+                                <div class="error-message">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
 
                 <div class="form-group season">
@@ -54,9 +62,13 @@
                             </label>
                         @endforeach
                     </div>
-                    @error('seasons')
-                        <div class="error-message">{{ $message }}</div>
-                    @enderror
+                    @if($errors->has('seasons'))
+                        <div class="error-messages">
+                            @foreach($errors->get('seasons') as $message)
+                                <div class="error-message">{{ $message }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -66,9 +78,13 @@
             <div class="form-group description">
                 <label>商品説明</label>
                 <textarea name="description" class="form-display" rows="4">{{ old('description', $product->description) }}</textarea>
-                @error('description')
-                    <div class="error-message">{{ $message }}</div>
-                @enderror
+                @if($errors->has('description'))
+                    <div class="error-messages">
+                        @foreach($errors->get('description') as $message)
+                            <div class="error-message">{{ $message }}</div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </form>

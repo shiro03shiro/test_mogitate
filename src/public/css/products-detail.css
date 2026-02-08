@@ -221,7 +221,17 @@
     border: 2px solid #ddd;
 }
 
-.error {
-    color: red;
-    margin-bottom: 20px;
+.error-messages {
+    margin-top: 5px;
+}
+
+.error-messages .error-message {
+    display: block;
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-bottom: 2px;
+}
+
+.error-messages .error-message:last-child {
+    margin-bottom: 0;
 }
