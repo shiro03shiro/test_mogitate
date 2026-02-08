@@ -59,7 +59,7 @@ class ProductController extends Controller
         if ($request->has('seasons')) {
             $product->seasons()->attach($request->seasons);
         }
-        return redirect()->route('products.index')->with('success', '商品を登録しました');
+        return redirect()->route('products.index');
     }
 
     public function update(ProductUpdateRequest $request, $productId)
@@ -78,8 +78,7 @@ class ProductController extends Controller
         if ($request->has('seasons')) {
             $product->seasons()->attach($request->seasons);
         }
-        return redirect()->route('products.detail', $product->id)
-            ->with('success', '商品情報を更新しました');
+        return redirect()->route('products.index', $product->id);
     }
 
     public function delete($productId)
@@ -90,7 +89,7 @@ class ProductController extends Controller
         }
         $product->seasons()->detach();
         $product->delete();
-        return redirect()->route('products.index')->with('success', '商品を削除しました');
+        return redirect()->route('products.index');
     }
 
     public function search(Request $request)
