@@ -28,30 +28,6 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'search', 'sort'));
     }
 
-    public function edit(Product $product)
-    {
-        $seasons = Season::all();
-        return view('products.edit', compact('product', 'seasons'));
-    }
-
-    public function update(ProductUpdateRequest $request, Product $product)
-    {
-        $data = $request->validated();
-        if ($request->hasFile('image')) {
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $data['image'] = $request->file('image')->store('products', 'public');
-        }
-        $product->update($data);
-        $product->seasons()->detach();
-        if ($request->has('seasons')) {
-            $product->seasons()->attach($request->seasons);
-        }
-        return redirect()->route('products.detail', $product->id)
-            ->with('success', '商品情報を更新しました');
-    }
-
     public function detail(Product $product)
     {
         $seasons = Season::all();
@@ -75,8 +51,46 @@ class ProductController extends Controller
             $path = $request->file('image')->store('products', 'public');
             $data = $request->validated();
             $data['image'] = $path;
-            Product::create($data);
+            $product = Product::create($data);
+            if ($request->has('seasons')) {
+                $product->seasons()->attach($request->seasons);
+            }
         }
         return redirect()->route('products.index');
     }
+
+    public function update(ProductUpdateRequest $request, Product $product)
+    {
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $data['image'] = $request->file('image')->store('products', 'public');
+        }
+        $product->update($data);
+        $product->seasons()->detach();
+        if ($request->has('seasons')) {
+            $product->seasons()->attach($request->seasons);
+        }
+        return redirect()->route('products.detail', $product->id)
+            ->with('success', '商品情報を更新しました');
+    }
+
+    public function delete($productId)
+    {
+        $product = Product::findOrFail($productId);
+        if ($product->image && Storage::disk('public')->exists($product->image)) {
+            Storage::disk('public')->delete($product->image);
+        }
+        $product->seasons()->detach();
+        $product->delete();
+        return redirect()->route('products.index')->with('success', '商品を削除しました');
+    }
+
+    public function deleteForm($productId)
+    {
+        $product = Product::findOrFail($productId);
+        return view('products.delete', compact('product'));
+}
 }

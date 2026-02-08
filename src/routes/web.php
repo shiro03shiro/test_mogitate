@@ -7,5 +7,6 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/detail/{productId}', [ProductController::class, 'detail'])->name('products.detail');
 Route::get('/products/register', [ProductController::class, 'register'])->name('products.register');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::get('/products/{productId}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{productId}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{productId}', [ProductController::class, 'delete'])->name('products.delete');

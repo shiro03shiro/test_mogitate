@@ -2,65 +2,114 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/products-detail.css') }}">
+<style>
+.editing input, .editing textarea, .editing .season-options input {
+    border: 2px solid #f5c800 !important;
+    background: white;
+}
+.error { color: red; margin-bottom: 20px; }
+.success { color: green; margin-bottom: 20px; }
+.file-input { display: none; }
+</style>
 @endsection
 
 @section('content')
-{{-- 🚫 .body 削除でヘッダー正常化 --}}
 <div class="product-detail-container">
-  {{-- パンくずリスト --}}
-  <div class="breadcrumb">
-    <a href="{{ route('products.index') }}" class="link">商品一覧</a> ＞
-    <span class="current">{{ $product->name }}</span>
-  </div>
-
-  <div class="product-main">
-    {{-- 左側：商品画像 --}}
-    <div class="product-image">
-      <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image__img">
-    </div>
-
-    {{-- 右側：商品情報 --}}
-    <div class="product-info">
-      <div class="form-group">
-        <label>商品名</label>
-        <div class="form-display">{{ $product->name }}</div>
-      </div>
-
-      <div class="form-group">
-        <label>値段</label>
-        <div class="form-display">¥{{ number_format($product->price) }}</div>
-      </div>
-
-      <div class="form-group season">
-        <label>季節</label>
-        <div class="season-options">
-          <label><input type="checkbox" disabled {{ $product->seasons->contains('name', '春') ? 'checked' : '' }}> 春</label>
-          <label><input type="checkbox" disabled {{ $product->seasons->contains('name', '夏') ? 'checked' : '' }}> 夏</label>
-          <label><input type="checkbox" disabled {{ $product->seasons->contains('name', '秋') ? 'checked' : '' }}> 秋</label>
-          <label><input type="checkbox" disabled {{ $product->seasons->contains('name', '冬') ? 'checked' : '' }}> 冬</label>
+    {{-- 成功メッセージ --}}
+    @if(session('success'))
+        <div class="success">{{ session('success') }}</div>
+    @endif
+    {{-- バリデーションエラー --}}
+    @if ($errors->any())
+        <div class="error">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-      </div>
-    </div>
-  </div>
+    @endif
 
-  <div class="product-extra">
-    <div class="file-field">
-      <button class="btn">ファイルを選択</button>
-      <span class="file-name">{{ basename($product->image ?? '') ?: pathinfo(parse_url($product->image_url, PHP_URL_PATH)['path'], PATHINFO_BASENAME) }}</span>
-    </div>
+    {{-- 更新フォーム（常に編集可能） --}}
+    <form id="productForm" action="{{ route('products.update', $product) }}"
+        method="POST" enctype="multipart/form-data" class="editing">
+        @csrf
+        @method('PUT')
+        {{-- パンくず --}}
+        <div class="breadcrumb">
+            <a href="{{ route('products.index') }}" class="link">商品一覧</a> ＞
+            <span class="current">{{ old('name', $product->name) }}</span>
+        </div>
 
-    <div class="form-group description">
-      <label>商品説明</label>
-      <div class="form-display main-width">{{ $product->description }}</div>
-    </div>
+        {{-- メインコンテンツ --}}
+        <div class="product-main">
+            {{-- 商品画像 --}}
+            <div class="product-image">
+                <img src="{{ $product->image_url }}" alt="{{ old('name', $product->name) }}"
+                    class="product-image__img">
+            </div>
 
+            <div class="product-info">
+                {{-- 商品名 --}}
+                <div class="form-group">
+                    <label>商品名 <span style="color:red;">*</span></label>
+                    <input type="text" name="name" value="{{ old('name', $product->name) }}"
+                        class="form-display" required>
+                </div>
+
+                {{-- 値段 --}}
+                <div class="form-group">
+                    <label>値段 <span style="color:red;">*</span></label>
+                    <input type="number" name="price" value="{{ old('price', $product->price) }}"
+                        class="form-display" min="0" max="10000" required>
+                </div>
+
+                {{-- 季節 --}}
+                <div class="form-group season">
+                    <label>季節 <span style="color:red;">*</span></label>
+                    <div class="season-options">
+                        @foreach($seasons as $season)
+                            <label style="cursor:pointer;">
+                                <input type="checkbox" name="seasons[]" value="{{ $season->id }}"
+                                    {{ $product->seasons->contains($season->id) || in_array($season->id, old('seasons', [])) ? 'checked' : '' }}>
+                                {{ $season->name }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-extra">
+            {{-- 画像選択 --}}
+            <div class="file-field">
+                <input type="file" name="image" id="imageInput" accept="image/png,image/jpeg">
+                <label for="imageInput" class="btn">画像を変更</label>
+                <span class="file-name">{{ basename($product->image ?? '') ?: '画像未設定' }}</span>
+            </div>
+
+            {{-- 商品説明 --}}
+            <div class="form-group description">
+                <label>商品説明 <span style="color:red;">*</span></label>
+                <textarea name="description" class="form-display" rows="5" required>{{ old('description', $product->description) }}</textarea>
+            </div>
+        </div>
+    </form>
+
+    {{-- アクションボタン --}}
     <div class="action-buttons">
         <div class="btn-group">
-            <a href="{{ route('products.index') }}" class="btn btn-back">戻る</a>
-            <button class="btn btn-save primary">変更を保存</button>
+            <a href="{{ route('products.index') }}" class="btn btn-back">一覧に戻る</a>
+            <button type="submit" form="productForm" class="btn btn-save primary">変更を保存</button>
         </div>
-        <button class="btn btn-delete delete">🗑</button>
+        {{-- 削除フォーム --}}
+        <form action="{{ route('products.delete', $product) }}" method="POST"
+            onsubmit="return confirm('本当に{{ $product->name }}を削除しますか？')"
+            style="display: inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-delete delete">🗑 削除</button>
+        </form>
     </div>
-  </div>
 </div>
 @endsection
