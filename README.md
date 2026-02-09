@@ -12,16 +12,8 @@
 
 1. `docker-compose exec php bash`
 2. `composer install`
-3. `WSLユーザー所有に変更`
-
-```text
-sudo chown -R $(whoami):$(whoami) src/
-chmod -R 755 src/
-chmod 644 src/.env*
-```
-
-4. `cp .env.example .env`
-5. .envに以下の環境変数を追加
+3. `cp .env.example .env`
+4. .envに以下の環境変数を追加
 
 ```text
 DB_CONNECTION=mysql
@@ -32,19 +24,19 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 ```
 
-6. アプリケーションキーの作成
+5. アプリケーションキーの作成
 
 ```bash
 php artisan key:generate
 ```
 
-7. マイグレーションの実行
+6. マイグレーションの実行
 
 ```bash
 php artisan migrate
 ```
 
-8. シーディングの実行
+7. シーディングの実行
 
 ```bash
 php artisan db:seed
