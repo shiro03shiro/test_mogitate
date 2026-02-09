@@ -42,9 +42,9 @@ chown -R www-data:www-data storage bootstrap/cache
 
 7. トラブルシューティング
 
-- Permission denied → chmod -R 775 storage
-- 画像非表示 → php artisan storage:link
-- APP_KEYエラー → php artisan key:generate
+- Permission denied → `chmod -R 775 storage`
+- 画像非表示 → `php artisan storage:link`
+- APP_KEYエラー → `php artisan key:generate`
 
 ## 使用技術(実行環境)
 
