@@ -24,23 +24,27 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 ```
 
-5. アプリケーションキーの作成
+5. 必須コマンド
 
 ```bash
 php artisan key:generate
-```
-
-6. マイグレーションの実行
-
-```bash
+php artisan storage:link
 php artisan migrate
-```
-
-7. シーディングの実行
-
-```bash
 php artisan db:seed
 ```
+
+6. 権限設定
+
+```bash
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+7. トラブルシューティング
+
+- Permission denied → chmod -R 775 storage
+- 画像非表示 → php artisan storage:link
+- APP_KEYエラー → php artisan key:generate
 
 ## 使用技術(実行環境)
 
@@ -56,5 +60,5 @@ php artisan db:seed
 
 ## URL
 
-- 開発環境：http://localhost/
+- 開発環境：http://localhost/products
 - phpMyAdmin:：http://localhost:8080/
