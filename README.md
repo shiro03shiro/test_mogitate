@@ -56,5 +56,6 @@ chown www-data:www-data storage/logs/laravel.log
 
 ## URL
 
-- 開発環境：[商品一覧ページ](http://localhost/products)
-- phpMyAdmin：[管理画面](http://localhost:8080/)
+- 開発環境：http://localhost/products
+  （商品一覧ページ）
+- phpMyAdmin：http://localhost:8080/
