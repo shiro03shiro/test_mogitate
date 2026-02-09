@@ -7,7 +7,6 @@
 .register-title {
     font-size: 2em;
     margin-bottom: 30px;
-    background-clip: text;
 }
 
 .form-group {
@@ -104,7 +103,7 @@ textarea {
     z-index: 1;
 }
 
-.season-checkbox:has(.custom-checkbox:not(:checked))::before {
+.custom-checkbox:not(:checked)+span::before {
     content: '';
     position: absolute;
     left: 0;
@@ -117,7 +116,7 @@ textarea {
     background: white;
 }
 
-.season-checkbox:has(.custom-checkbox:checked)::before {
+.custom-checkbox:checked+span::before {
     content: '✓';
     position: absolute;
     left: 0;
@@ -136,13 +135,9 @@ textarea {
     line-height: 1;
 }
 
-.season-checkbox:hover:has(.custom-checkbox:not(:checked))::before {
+.season-checkbox:hover .custom-checkbox:not(:checked)+span::before {
     background: white;
     border-color: black;
-}
-
-.season-checkbox input:checked+* {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .season-checkbox input {
