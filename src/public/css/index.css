@@ -76,13 +76,13 @@
     background: #e6b800;
 }
 
-.main-left .sort-reset-container {
+.sort-reset-container {
     margin: 20px 0;
     display: flex;
     justify-content: flex-start;
 }
 
-.main-left .sort-reset-btn {
+.sort-reset-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -98,18 +98,18 @@
     box-sizing: border-box;
 }
 
-.main-left .sort-reset-btn:hover {
+.sort-reset-btn:hover {
     background: #f5c800;
     color: #fff;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(245, 200, 0, 0.3);
 }
 
-.main-left .sort-reset-text {
+.sort-reset-text {
     font-weight: 500;
 }
 
-.main-left .sort-reset-icon {
+.sort-reset-icon {
     width: 22px;
     height: 22px;
     border-radius: 50%;
@@ -124,7 +124,7 @@
     flex-shrink: 0;
 }
 
-.main-left .sort-reset-btn:hover .sort-reset-icon {
+.sort-reset-btn:hover .sort-reset-icon {
     background: #fff;
     color: #f5c800;
 }
@@ -313,11 +313,6 @@
     .main-left {
         flex: none;
         padding: 20px;
-    }
-
-    .add-button-container {
-        position: static;
-        order: -1;
     }
 
     .product-grid {
