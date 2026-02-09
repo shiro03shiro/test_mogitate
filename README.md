@@ -28,9 +28,9 @@ DB_PASSWORD=laravel_pass
 
 ```bash
 php artisan key:generate
-php artisan storage:link
 php artisan migrate
 php artisan db:seed
+php artisan storage:link
 ```
 
 6. 権限設定
@@ -38,13 +38,9 @@ php artisan db:seed
 ```bash
 chmod -R 775 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
+touch storage/logs/laravel.log
+chown www-data:www-data storage/logs/laravel.log
 ```
-
-7. トラブルシューティング
-
-- Permission denied → `chmod -R 775 storage`
-- 画像非表示 → `php artisan storage:link`
-- APP_KEYエラー → `php artisan key:generate`
 
 ## 使用技術(実行環境)
 
@@ -60,5 +56,5 @@ chown -R www-data:www-data storage bootstrap/cache
 
 ## URL
 
-- 開発環境：http://localhost/products
-- phpMyAdmin:：http://localhost:8080/
+- 開発環境：http://localhost/products（商品一覧ページ）
+- phpMyAdmin：http://localhost:8080/
