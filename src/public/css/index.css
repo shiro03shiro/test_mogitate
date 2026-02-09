@@ -54,7 +54,7 @@
 .search-form__item-input:focus,
 .search-form__item-select:focus {
     outline: none;
-    border-color: #f5c800;
+    border-color: #ffa500;
 }
 
 .search-form__button {
@@ -64,7 +64,7 @@
 .search-form__button-submit {
     width: 100%;
     padding: 14px;
-    background: #f5c800;
+    background: #ffa500;
     border: none;
     border-radius: 8px;
     font-size: 16px;
@@ -73,7 +73,7 @@
 }
 
 .search-form__button-submit:hover {
-    background: #e6b800;
+    background: #ffa500;
 }
 
 .sort-reset-container {
@@ -87,7 +87,7 @@
     align-items: center;
     gap: 6px;
     background: transparent;
-    border: 2px solid #f5c800;
+    border: 2px solid #ffa500;
     border-radius: 25px;
     padding: 10px 14px;
     text-decoration: none;
@@ -99,7 +99,7 @@
 }
 
 .sort-reset-btn:hover {
-    background: #f5c800;
+    background: #ffa500;
     color: #fff;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(245, 200, 0, 0.3);
@@ -113,8 +113,8 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    border: 2px solid #f5c800;
-    color: #f5c800;
+    border: 2px solid #ffa500;
+    color: #ffa500;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,7 +126,7 @@
 
 .sort-reset-btn:hover .sort-reset-icon {
     background: #fff;
-    color: #f5c800;
+    color: #ffa500;
 }
 
 .divider {
@@ -154,7 +154,7 @@
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
-    background: #f5c800;
+    background: #ffa500;
     text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
@@ -164,7 +164,7 @@
 }
 
 .add-product__btn:hover {
-    background: #e6b800;
+    background: #ffa500;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(245, 200, 0, 0.4);
 }
@@ -279,16 +279,16 @@
 }
 
 .pagination-link:hover:not(.disabled) {
-    background: #f5c800;
+    background: #ffa500;
     color: #fff;
-    border-color: #f5c800;
+    border-color: #ffa500;
     transform: translateY(-1px);
 }
 
 .pagination-link.active {
-    background: #f5c800;
+    background: #ffa500;
     color: #fff;
-    border-color: #f5c800;
+    border-color: #ffa500;
 }
 
 .pagination-link.disabled {

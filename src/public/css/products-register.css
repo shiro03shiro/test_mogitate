@@ -22,7 +22,7 @@
 }
 
 .required {
-    background: #dc2626;
+    background: #ff0000;
     color: white;
     padding: 2px 8px;
     border-radius: 4px;
@@ -73,7 +73,7 @@ textarea {
 }
 
 .season-multiple {
-    color: #dc2626;
+    color: #ff0000;
     font-size: 0.875em;
 }
 
@@ -166,7 +166,7 @@ textarea {
 }
 
 .btn-register {
-    background: #f5c800;
+    background: #ffa500;
 }
 
 .btn-register:hover {
@@ -188,7 +188,7 @@ textarea {
 
 .error-messages .error-message {
     display: block;
-    color: #e53e3e;
+    color: #ff0000;
     font-size: 0.875rem;
     margin-bottom: 2px;
 }
