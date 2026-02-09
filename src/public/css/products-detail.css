@@ -100,7 +100,7 @@
     color: black;
 }
 
-label:has(.custom-checkbox:not(:checked))::before {
+.custom-checkbox:not(:checked)+span::before {
     content: '';
     position: absolute;
     left: 0;
@@ -112,7 +112,7 @@ label:has(.custom-checkbox:not(:checked))::before {
     background: white;
 }
 
-label:has(.custom-checkbox:checked)::before {
+.custom-checkbox:checked+span::before {
     content: '✓';
     position: absolute;
     left: 0;
